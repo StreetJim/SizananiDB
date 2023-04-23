@@ -1,0 +1,38 @@
+﻿@model CreateVehicleViewModel
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form asp-action="Create" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Vehicle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" asp-for="RegistrationNumber"></label>
+                    </div>
+                    <input class="form-control" asp-for="RegistrationNumber">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" asp-for="Model"></label>
+                    </div>
+                    <input class="form-control" asp-for="Model">
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" asp-for="Weight"></label>
+                    </div>
+                    <input class="form-control" asp-for="Weight">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>

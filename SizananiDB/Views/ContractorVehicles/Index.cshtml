@@ -1,0 +1,48 @@
+﻿@model ContractorVehicleIndexViewModel
+
+<div class="card">
+    <div class="card-header">
+        <h3>Contractor Vehicles</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <select asp-for="Id" asp-items="@Model.Contractors">
+                    <option>Select a contractor to Filter</option>
+                </select>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <button class="btn-primary" id="search">Search</button>
+                <button class="btn-primary" id="link-vehicle">Link Vehicle</button>
+            </div>
+        </div>
+        <div id="contractor"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Open Edit modal
+        $("#search").on("click", function () {
+            let id = $('#Id').val();
+            $.get("/ContractorVehicles/GetContractorVehicles?id=" + id, function (data) {
+                $("#contractor").html(data);
+            });
+        });
+
+        // Open Edit modal
+        $("#link-vehicle").on("click", function () {
+            let id = $('#Id').val();
+            $.get("/ContractorVehicles/LinkVehicle?id=" + id, function (data) {
+                $("#modal").html(data);
+                $("#modal").modal("show");
+            });
+        });
+    })
+</script>
+
+@await Html.PartialAsync("/Views/Shared/_BaseAlert.cshtml")

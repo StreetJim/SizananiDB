@@ -1,0 +1,17 @@
+﻿@{
+    var success = Convert.ToBoolean(TempData["Success"]);
+    var message = Convert.ToString(TempData["Message"]);
+    var successText = success ? "Success" : "Failure";
+    var icon = success ? "success" : "error";
+
+}
+
+<script>
+    @if (!string.IsNullOrEmpty(message)) {
+    @:  Swal.fire({
+    @:      icon: '@icon',
+    @:      title: '@successText',
+    @:      text: '@message'
+    @:  })
+    }
+</script>

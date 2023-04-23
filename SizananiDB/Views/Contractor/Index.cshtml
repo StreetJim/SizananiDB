@@ -1,0 +1,46 @@
+﻿@model List<Contractor>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Vehicles</h3>
+        <button class="btn-primary" id="create">Create</button>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>PhoneNumber</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Open Edit modal
+        $("#create").on("click", function () {
+            let id = $(this).data("id");
+            $.get("/Contractor/Create/", function (data) {
+                $("#modal").html(data);
+                $("#modal").modal("show");
+            });
+        });
+    })
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+
+@await Html.PartialAsync("/Views/Shared/_BaseAlert.cshtml")
