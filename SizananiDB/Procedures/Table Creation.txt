@@ -1,0 +1,26 @@
+CREATE TABLE Vehicle (
+    Id int IDENTITY(1,1)  NOT NULL ,
+    RegistrationNumber nvarchar(50) NOT NULL,
+    Model nvarchar(50) not null,
+	Weight int,
+    PRIMARY KEY (Id),
+);
+
+CREATE TABLE Contractor (
+    Id int IDENTITY(1,1)  NOT NULL,
+    Name nvarchar(50),
+	Email nvarchar(50),
+	PhoneNumber nvarchar(15),
+    VehicleId int,
+    PRIMARY KEY (Id),
+    FOREIGN KEY (VehicleId) REFERENCES Vehicle(Id)
+);
+
+Create Table ContractorVehicles (
+    Id int IDENTITY(1,1)  NOT NULL,	
+    PRIMARY KEY (Id),
+	VehicleId int,
+	ContactorId int,
+    FOREIGN KEY (VehicleId) REFERENCES Vehicle(Id),
+    FOREIGN KEY (ContactorId) REFERENCES Contractor(Id)
+);

@@ -1,0 +1,113 @@
+Procedure for question E
+
+----
+
+CREATE PROCEDURE GetContractorsVehiclesDetails 
+AS
+
+select name as Name, count(contractorVehicles.id) as TotalVehicles, sum(Vehicle.weight) as TotalWeight from Contractor
+join contractorVehicles on Contractor.Id = contractorVehicles.ContactorId
+join Vehicle on contractorVehicles.vehicleId = Vehicle.Id
+group by name
+
+----------
+
+
+USE [VehicleManagement]
+GO
+/****** Object:  StoredProcedure [dbo].[CreateContractor]    Script Date: 2023/04/23 18:13:39 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[CreateContractor] @Name nvarchar(30), @Email nvarchar(30), @PhoneNumber nvarchar(30)
+AS
+
+insert into Contractor(Name, Email, PhoneNumber)
+select @Name, @Email, @PhoneNumber
+
+------
+
+USE [VehicleManagement]
+GO
+/****** Object:  StoredProcedure [dbo].[CreateVehicle]    Script Date: 2023/04/23 18:13:49 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[CreateVehicle] @RegistrationNumber nvarchar(30), @Model nvarchar(30), @Weight int
+AS
+
+insert into Vehicle(RegistrationNumber, model, Weight)
+select @RegistrationNumber, @Model, @Weight
+
+------
+
+USE [VehicleManagement]
+GO
+/****** Object:  StoredProcedure [dbo].[GetContractors]    Script Date: 2023/04/23 18:13:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[GetContractors] 
+AS
+
+select * from Contractor
+
+
+------
+
+
+
+USE [VehicleManagement]
+GO
+/****** Object:  StoredProcedure [dbo].[GetContractorsVehicles]    Script Date: 2023/04/23 18:14:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GetContractorsVehicles] @ContractorId int
+AS
+
+select Vehicle.Id, RegistrationNumber, model, Weight from contractorVehicles
+join Vehicle on contractorVehicles.vehicleId = Vehicle.Id
+join Contractor on contractorVehicles.ContactorId = Contractor.id
+where Contractor.Id = @ContractorId
+
+
+
+--------
+
+USE [VehicleManagement]
+GO
+/****** Object:  StoredProcedure [dbo].[GetVechiles]    Script Date: 2023/04/23 18:14:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GetVechiles] 
+AS
+
+select * from Vehicle
+
+
+
+-------
+
+
+USE [VehicleManagement]
+GO
+/****** Object:  StoredProcedure [dbo].[LinkVehicleToContractor]    Script Date: 2023/04/23 18:14:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[LinkVehicleToContractor] @VehicleId nvarchar(30), @ContactorId nvarchar(30)
+AS
+
+insert into contractorvehicles(VehicleId, ContactorId)
+select @VehicleId, @ContactorId
+
+
